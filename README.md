@@ -10,4 +10,4 @@ This extension tries to replicate the behaviour of "Recent files" of Jetbrains (
 
 ## Limitations
 
-The quick pick panel does not allow reading colors from the current theme (or do any custom stuff aside from picking a custom icon), so the icons have to be compiled ahead-of-time. It likely won't look good with your theme. Feel free to fork the plugin and adjust the colors for your needs... or submit an issue so I know I'm not the only one who may want this plugin.
+The quick pick panel does not allow reading colors from the current theme (or do any custom stuff aside from picking a custom icon), so you will have to configure colors inside the extension settings. VSCode caches the icons, so please Reload Window (`Cmd+P` -> `Developer: Reload Window`) after each change.
