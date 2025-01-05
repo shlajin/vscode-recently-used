@@ -10,7 +10,8 @@ const generatedMapCircles = {
   orange: "#DE8E88", // untracked
   gray: "#888888", // ignored
   transparent: "",
-};
+};  
+
 
 for (const [color, name] of Object.entries(generatedMapCircles)) {
   const templatePath = path.join("media", "circle-template.svg");

@@ -2,6 +2,8 @@ import path from "path";
 import * as vscode from "vscode";
 import { GitExtension, Repository, Status } from "./vendor/git";
 
+const WORKSPACE_STATE_KEY = "recently-opened-list";
+
 const colorsForCircles = [
   "red",
   "green",
@@ -84,21 +86,6 @@ const activateGit = async () => {
   const repository = gitAPI.repositories[0];
 
   return repository;
-
-  // const filePath = editor.document.uri;
-
-  // var repository = gitAPI.repositories.filter((r) =>
-  //   r.rootUri.fsPath.replace(/\\/g, "/").startsWith(this.g_workspaceFolder)
-  // )[0];
-  // if (!repository) {
-  //   vscode.window.showErrorMessage(
-  //     `Couldn't find a git repository at ${this.g_workspaceFolder} try to open VSCode with a different folder`
-  //   );
-  //   return;
-  // }
-  // const unstaged = repository.state.workingTreeChanges.map((r) => r.resource);
-  // const staged = repository.state.indexChanges.map((r) => r.resource);
-  // const all = unstaged.concat(staged);
 };
 
 const getFileStatuses = (repository: Repository) => {
@@ -150,7 +137,10 @@ const getQuickPickItemFromFilePath = (
 };
 
 const registerNewPath = (path: string, context: vscode.ExtensionContext) => {
-  const openedFiles = context.globalState.get("openedFiles", [] as string[]);
+  const openedFiles = context.workspaceState.get(
+    WORKSPACE_STATE_KEY,
+    [] as string[]
+  );
 
   const index = openedFiles.indexOf(path);
   if (index > -1) {
@@ -162,29 +152,12 @@ const registerNewPath = (path: string, context: vscode.ExtensionContext) => {
     openedFiles.pop();
   }
 
-  context.globalState.update("openedFiles", openedFiles);
+  context.workspaceState.update(WORKSPACE_STATE_KEY, openedFiles);
 };
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export async function activate(context: vscode.ExtensionContext) {
-  // const gitColors = ['gitDecoration.addedResourceForeground',
-  //   'gitDecoration.modifiedResourceForeground',
-  //   'gitDecoration.deletedResourceForeground',
-  //   'gitDecoration.renamedResourceForeground',
-  //   'gitDecoration.stageModifiedResourceForeground',
-  //   'gitDecoration.stageDeletedResourceForeground',
-  //   'gitDecoration.untrackedResourceForeground',
-  //   'gitDecoration.ignoredResourceForeground',
-  //   'gitDecoration.conflictingResourceForeground',
-  //   'gitDecoration.submoduleResourceForeground',
-  //   'git.blame.editorDecorationForeground']
-
-  // const color = ;
-
-  //     gitColors.forEach(color => {
-  // console.log(color, new vscode.ThemeColor('addedResourceForeground'))
-  //     })
   const repository = await activateGit();
 
   if (!repository) {
@@ -217,7 +190,7 @@ export async function activate(context: vscode.ExtensionContext) {
       // The code you place here will be executed every time your command is executed
       // Display a message box to the user
       const openedFiles =
-        context.globalState.get<string[]>("openedFiles") || [];
+        context.workspaceState.get<string[]>(WORKSPACE_STATE_KEY) || [];
 
       const fileStatuses = getFileStatuses(repository);
       const recentPicks = openedFiles.map((fullpath, index) =>
@@ -225,23 +198,24 @@ export async function activate(context: vscode.ExtensionContext) {
       );
 
       const quickPick = vscode.window.createQuickPick<vscode.QuickPickItem>();
-      quickPick.title = "Select File";
+      quickPick.title = "Recent files";
 
       quickPick.items = recentPicks;
 
       quickPick.activeItems = [recentPicks[1]];
 
+      quickPick.onDidChangeValue(() => {
+        if (quickPick.activeItems.length === 0) {
+          quickPick.title = `Hit enter to open Go To File...`;
+        } else {
+          quickPick.title = `Recent files`;
+        }
+      });
       quickPick.onDidAccept(async () => {
+        quickPick.dispose();
         const selected = quickPick.selectedItems[0];
+
         if (selected) {
-          quickPick.dispose();
-
-          const fullPath = path.join(
-            ...[workspaceFolder, selected.description, selected.label].filter(
-              (x): x is string => Boolean(x)
-            )
-          );
-
           try {
             vscode.commands.executeCommand(
               "vscode.open",
@@ -250,12 +224,20 @@ export async function activate(context: vscode.ExtensionContext) {
           } catch (error) {
             vscode.window.showErrorMessage(`Failed to open document: ${error}`);
           }
+        } else {
+          try {
+            vscode.commands.executeCommand(
+              "workbench.action.quickOpen",
+              quickPick.value
+            );
+          } catch (error) {
+            vscode.window.showErrorMessage(`Failed to open quickOpen modal: ${error}`);
+          }
         }
       });
 
       quickPick.onDidHide(() => quickPick.dispose());
       quickPick.show();
-      //   vscode.window.showInformationMessage("fuck you");
     }
   );
 
