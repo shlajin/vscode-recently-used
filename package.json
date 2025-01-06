@@ -3,7 +3,7 @@
   "displayName": "colorful-recently-used",
   "description": "Recently used files... with colors.",
   "icon": "media/icon.jpeg",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": {
     "name": "Artem Shlagin",
     "email": "artem@shlagin.com"

@@ -10,6 +10,14 @@ This extension tries to replicate the behaviour of "Recent files" of Jetbrains (
 
 ![Demo](./images/looks.png)
 
+## Usage
+
+Bind it – `colorful-recently-used.list` to something nice like `Cmd+E` and have fun!
+
+If nothing is found, just hit Enter to open the big "Search files by name".
+
+It always pre-selects the second item, so you can quickly jump back and forth between current and previous files by hitting `Cmd+E Enter`.
+
 ## Configuration
 
 Plug in colors from the settings and reload the window (see "Limitations" section).
