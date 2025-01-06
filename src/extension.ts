@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
-import { knownColorConfigurations, regenerateIcons } from "./generateIcons";
+import { recompileExcludedRegexp } from "./excludedRegexp";
+import { regenerateIcons } from "./generateIcons";
 import { activateGit, getFileStatuses } from "./git";
 import { getQuickPickItemFromFilePath } from "./quickPickItem";
 
@@ -42,24 +43,30 @@ export async function activate(context: vscode.ExtensionContext) {
   }
 
   let iconsMap = regenerateIcons();
+  let excludedRegexp = recompileExcludedRegexp();
+
   vscode.window.showInformationMessage(
     "Icons for colorful-recently-used generated."
   );
 
-  // Uh oh, this piece does not make sense, as VSCode caches the icons!
-  // Once I figure out how to invalidate the cache, this piece can be uncommented and it should
-  // update the colors in real-time
-  // vscode.workspace.onDidChangeConfiguration((event) => {
-  //   if (
-  //     knownColorConfigurations.some((x) =>
-  //       event.affectsConfiguration(`colorful-recently-used.${x}`)
-  //     )
-  //   ) {
-  //     vscode.window.showInformationMessage(
-  //       "Icons for colorful-recently-used regenerated based on configuration changes."
-  //     );
-  //   }
-  // });
+  vscode.workspace.onDidChangeConfiguration((event) => {
+    // Uh oh, this piece does not make sense, as VSCode caches the icons!
+    // Once I figure out how to invalidate the cache, this piece can be uncommented and it should
+    // update the colors in real-time
+    // if (
+    //   knownColorConfigurations.some((x) =>
+    //     event.affectsConfiguration(`colorful-recently-used.${x}`)
+    //   )
+    // ) {
+    //   vscode.window.showInformationMessage(
+    //     "Icons for colorful-recently-used regenerated based on configuration changes."
+    //   );
+    // }
+
+    if (event.affectsConfiguration("colorful-recently-used.excludedRegexp")) {
+      excludedRegexp = recompileExcludedRegexp();
+    }
+  });
 
   const onDidChangeVisible = vscode.window.onDidChangeActiveTextEditor(
     (editor) => {
@@ -93,7 +100,8 @@ export async function activate(context: vscode.ExtensionContext) {
         getQuickPickItemFromFilePath(
           fullpath,
           fileStatuses.get(fullpath),
-          iconsMap
+          iconsMap,
+          excludedRegexp
         )
       );
 
