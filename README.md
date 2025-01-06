@@ -8,6 +8,16 @@ The Explorer pane of VSCode does that, but for some unknown reasons to me, the "
 
 This extension tries to replicate the behaviour of "Recent files" of Jetbrains (IDEA/Webstorm/etc) highlights the files in there.
 
+![Demo](./images/looks.png)
+
+## Configuration
+
+Plug in colors from the settings and reload the window (see "Limitations" section).
+
+The `excludedRegexp` setting accepts a Regexp. E.g. if you want to mark both `node_modules` and `data` folders as excluded, use something like `/node_modules|data/`.
+
+In essence, the regexp tests whether file should be marked as exlcuded like this: `new RegExp(regexpString).test(filePath)`.
+
 ## Limitations
 
 The quick pick panel does not allow reading colors from the current theme (or do any custom stuff aside from picking a custom icon), so you will have to configure colors inside the extension settings. VSCode caches the icons, so please Reload Window (`Cmd+P` -> `Developer: Reload Window`) after each change.
