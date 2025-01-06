@@ -1,6 +1,6 @@
 {
-  "name": "recently-used",
-  "displayName": "recently-used",
+  "name": "colorful-recently-used",
+  "displayName": "colorful-recently-used",
   "description": "Recently used files... with colors.",
   "icon": "media/icon.jpeg",
   "version": "0.0.3",
@@ -23,50 +23,50 @@
   "contributes": {
     "commands": [
       {
-        "command": "recently-used.list",
+        "command": "colorful-recently-used.list",
         "title": "Recently used files"
       }
     ],
     "configuration": {
       "type": "object",
       "properties": {
-        "recently-used.conflictColor": {
+        "colorful-recently-used.conflictColor": {
           "type": "string",
           "default": "#ee3333",
           "description": "Color of the file with git conflict.",
           "format": "color-hex"
         },
-        "recently-used.addedColor": {
+        "colorful-recently-used.addedColor": {
           "type": "string",
           "default": "#829260",
           "description": "Color of the added file.",
           "format": "color-hex"
         },
-        "recently-used.changedColor": {
+        "colorful-recently-used.changedColor": {
           "type": "string",
           "default": "#a8c5f7",
           "description": "Color of the changed file.",
           "format": "color-hex"
         },
-        "recently-used.untrackedColor": {
+        "colorful-recently-used.untrackedColor": {
           "type": "string",
           "default": "#DE8E88",
           "description": "Color of the untracked file",
           "format": "color-hex"
         },
-        "recently-used.ignoredColor": {
+        "colorful-recently-used.ignoredColor": {
           "type": "string",
           "default": "#888888",
           "description": "Color of the ignored file",
           "format": "color-hex"
         },
-        "recently-used.excludedColor": {
+        "colorful-recently-used.excludedColor": {
           "type": "string",
           "default": "#DE8E88",
           "description": "Minus icon excluded file",
           "format": "color-hex"
         },
-        "recently-used.excludedRegexp": {
+        "colorful-recently-used.excludedRegexp": {
           "type": "string",
           "default": "/node_modules/",
           "description": "Pattern of the excluded files"

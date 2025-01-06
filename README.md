@@ -1,4 +1,4 @@
-# recently-used
+# colorful-recently-used
 
 Usually during coding I edit just a bunch of files. But that does not mean I don't peek into other files – in fact, I do that A LOT. So when I summon my belowed "Go To File" modal... I get lost quickly. There are so many files in there – which one I need?...
 

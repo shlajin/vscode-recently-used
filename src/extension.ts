@@ -52,7 +52,7 @@ export async function activate(context: vscode.ExtensionContext) {
   // vscode.workspace.onDidChangeConfiguration((event) => {
   //   if (
   //     knownColorConfigurations.some((x) =>
-  //       event.affectsConfiguration(`recently-used.${x}`)
+  //       event.affectsConfiguration(`colorful-recently-used.${x}`)
   //     )
   //   ) {
   //     vscode.window.showInformationMessage(
@@ -73,7 +73,7 @@ export async function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(onDidChangeVisible);
 
   const disposable = vscode.commands.registerCommand(
-    "recently-used.list",
+    "colorful-recently-used.list",
     () => {
       const workspaceFolder = vscode.workspace.workspaceFolders?.[0].uri.fsPath;
       if (!workspaceFolder) {

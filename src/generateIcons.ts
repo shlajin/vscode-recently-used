@@ -23,7 +23,7 @@ export const regenerateIcons = () => {
       colorConfigName === TRANSPARENT
         ? "transparent"
         : vscode.workspace
-            .getConfiguration("recently-used")
+            .getConfiguration("colorful-recently-used")
             .get<string>(colorConfigName) || "#FF0000";
 
     knownIconShapes.forEach((iconShape) => {
