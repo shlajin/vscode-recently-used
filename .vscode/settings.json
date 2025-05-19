@@ -10,5 +10,18 @@
     "out": true
 },
   // Turn off tsc task auto detection since we have the necessary tasks as npm scripts
-  "typescript.tsc.autoDetect": "off"
+  "typescript.tsc.autoDetect": "off",
+  "workbench.colorCustomizations": {
+    "editorBracketHighlight.foreground1": "#5caeef",
+    "editorBracketHighlight.foreground2": "#5caeef",
+    "editorBracketHighlight.foreground3": "#5caeef",
+    "editorBracketHighlight.foreground4": "#5caeef",
+    "editorBracketHighlight.foreground5": "#5caeef",
+    "editorBracketHighlight.foreground6": "#5caeef",
+    "editorBracketHighlight.unexpectedBracket.foreground": "#db6165",
+    "list.activeSelectionBackground": "#1C2020",
+    "list.activeSelectionForeground": "#dcdcdc",
+    "list.inactiveSelectionBackground": "#232828",
+    "list.inactiveSelectionForeground": "#eeeeee"
+  }
 }

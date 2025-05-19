@@ -31,5 +31,5 @@ export const getQuickPickItemFromFilePath = (
       fullPath,
     },
     iconPath,
-  };
+  } as unknown as vscode.QuickPickItem;
 };

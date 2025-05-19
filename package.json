@@ -3,11 +3,12 @@
   "displayName": "colorful-recently-used",
   "description": "Recently used files... with colors.",
   "icon": "images/icon.jpeg",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": {
     "name": "Artem Shlagin",
     "email": "artem@shlagin.com"
   },
+  "publisher": "ArtemShlagin",
   "engines": {
     "vscode": "^1.96.0"
   },
@@ -18,8 +19,18 @@
     "url": "https://github.com/shlajin/vscode-recently-used"
   },
   "license": "MIT",
-  "activationEvents": [],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
   "main": "./dist/extension.js",
+  "files": [
+    "dist",
+    "media",
+    "images",
+    "package.json",
+    "README.md",
+    "LICENSE"
+  ],
   "contributes": {
     "commands": [
       {
@@ -88,12 +99,13 @@
     "lint": "eslint src",
     "test": "vscode-test",
     "vsce": "vsce",
-    "package-locally": "vsce package --no-dependencies"
+    "package-locally": "vsce package --no-dependencies",
+    "publish": "vsce publish --no-dependencies"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.10",
     "@types/node": "20.x",
-    "@types/vscode": "^1.96.0",
+    "vscode": "^1.1.37",
     "@typescript-eslint/eslint-plugin": "^8.17.0",
     "@typescript-eslint/parser": "^8.17.0",
     "@vscode/test-cli": "^0.0.10",

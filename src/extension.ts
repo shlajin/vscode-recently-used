@@ -1,8 +1,9 @@
-import * as vscode from "vscode";
-import { recompileExcludedRegexp } from "./excludedRegexp";
-import { regenerateIcons } from "./generateIcons";
-import { activateGit, getFileStatuses } from "./git";
-import { getQuickPickItemFromFilePath } from "./quickPickItem";
+import * as vscode from "vscode"
+import { recompileExcludedRegexp } from "./excludedRegexp"
+import { regenerateIcons } from "./generateIcons"
+import { activateGit, getFileStatuses } from "./git"
+import { getQuickPickItemFromFilePath } from "./quickPickItem"
+import { Status } from "./vendor/git"
 
 const WORKSPACE_STATE_KEY = "recently-opened-list";
 
@@ -37,10 +38,6 @@ const registerNewPath = (path: string, context: vscode.ExtensionContext) => {
 // Your extension is activated the very first time the command is executed
 export async function activate(context: vscode.ExtensionContext) {
   const repository = await activateGit();
-
-  if (!repository) {
-    return;
-  }
 
   let iconsMap = regenerateIcons();
   let excludedRegexp = recompileExcludedRegexp();
@@ -95,11 +92,11 @@ export async function activate(context: vscode.ExtensionContext) {
       const openedFiles =
         context.workspaceState.get<string[]>(WORKSPACE_STATE_KEY) || [];
 
-      const fileStatuses = getFileStatuses(repository);
+      const fileStatuses = repository && getFileStatuses(repository);
       const recentPicks = openedFiles.map((fullpath, index) =>
         getQuickPickItemFromFilePath(
           fullpath,
-          fileStatuses.get(fullpath),
+          fileStatuses ? fileStatuses.get(fullpath) : undefined,
           iconsMap,
           excludedRegexp
         )

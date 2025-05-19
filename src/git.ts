@@ -41,6 +41,7 @@ export const getFileStatuses = (repository: Repository) => {
   repository.state.workingTreeChanges.forEach((r) => {
     map.set(r.uri.fsPath, r.status);
   });
+
   repository.state.indexChanges.forEach((r) => {
     map.set(r.uri.fsPath, r.status);
   });
