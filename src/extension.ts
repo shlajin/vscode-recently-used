@@ -1,9 +1,8 @@
-import * as vscode from "vscode"
-import { recompileExcludedRegexp } from "./excludedRegexp"
-import { regenerateIcons } from "./generateIcons"
-import { activateGit, getFileStatuses } from "./git"
-import { getQuickPickItemFromFilePath } from "./quickPickItem"
-import { Status } from "./vendor/git"
+import * as vscode from "vscode";
+import { recompileExcludedRegexp } from "./excludedRegexp";
+import { regenerateIcons } from "./generateIcons";
+import { activateGit, getFileStatuses } from "./git";
+import { getQuickPickItemFromFilePath } from "./quickPickItem";
 
 const WORKSPACE_STATE_KEY = "recently-opened-list";
 
